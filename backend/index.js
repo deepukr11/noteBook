@@ -10,6 +10,7 @@ app.use(cors())
 app.use(express.json());
 
 app.use('/api/auth',require('./routes/auth'))
+
 app.use('/api/notes',require('./routes/notes'))
 
 
@@ -18,7 +19,7 @@ app.get('/' ,(req , res) => {
  })
 
  app.get('/home' ,(req , res) => {
-  res.send("hii i am home ")
+  res.send("I am home ")
  })
 
   app.listen(port,()=>{
