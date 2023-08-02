@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 const Signup = (props) => {
   
-  const Host = process.env.REACT_APP_HOST;
+  const Host = "https://notebookserver.onrender.com";
   let history = useHistory();
   const [credential, setCredential] = useState({ name: "", email: "", password: "", cpassword: "" });
 
