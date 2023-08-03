@@ -3,3 +3,39 @@
 i{
   cursor: pointer;
 }
+
+.bg-img{
+  background-image: url('./image/bgimg.png');
+  min-height: 100%;
+  min-width: 100%;
+  background-size: cover;
+  background-position: center;
+ 
+}
+
+.text{
+  color: rgb(255, 245, 48);
+}
+.Buttoncolor{
+  color: rgb(247, 247, 245);
+}
+.texte-dit-color{
+  color: black;
+}
+
+.login-bg-img{
+  background-image: url('./image/loginimg.png');
+  min-height: 100%;
+  min-width: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.width{
+  width: 17rem;
+}
+
+.addnotewidth{
+  width: 60;
+  height: 3rem;
+}

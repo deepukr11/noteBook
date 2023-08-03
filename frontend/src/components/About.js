@@ -3,51 +3,43 @@ import React from 'react'
 
 export default function About(props) {
   return (
-    <div className='my-5' style={{backgroundColor: props.mode===`dark`?`gray`:`white` }}><br/>
-      <div className="accordion" id="accordionExample">
-  <div className="accordion-item"  style={{backgroundColor: props.mode===`dark`?`gray`:`white` }} >
-    <h2 className="accordion-header">
-      <button className="accordion-button" type="button" style={{backgroundColor: props.mode===`dark`?`#5e7666`:`white` ,color: props.mode===`dark`?`white`:`black`}} data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        <strong>A</strong>
-      </button>
-    </h2>
-    <div id="collapseOne" className="accordion-collapse collapse show"  data-bs-parent="#accordionExample">
-      <div className="accordion-body">
-      We believe that words have the power to inspire, 
-      educate, and connect people from all walks of life. We are passionate 
-      about the written word and the endless possibilities it brings to the digital world.      </div>
-    </div>
-  </div>
-  <div className="accordion-item" style={{backgroundColor: props.mode===`dark`?`gray`:`white`}}>
-    <h2 className="accordion-header">
-      <button className="accordion-button collapsed"  style={{backgroundColor: props.mode===`dark`?`#5e7666`:`white`,color: props.mode===`dark`?`white`:`black`}} type="button"  data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-      <strong>B</strong>
-      </button>
-    </h2>
-    <div id="collapseTwo" className="accordion-collapse collapse"  data-bs-parent="#accordionExample">
-      <div className="accordion-body">
-      What sets us apart is our commitment to quality. Every piece of content that graces our web page
-       undergoes a meticulous review process. Our team ensures that each sentence is carefully crafted, 
-       every idea is well-researched, and the final product meets the highest standards of excellence      </div>
-    </div>
-  </div>
-  <div className="accordion-item" style={{backgroundColor: props.mode===`dark`?`gray`:`white`}}>
-    <h2 className="accordion-header">
-      <button className="accordion-button collapsed"  style={{backgroundColor: props.mode===`dark`?`#5e7666`:`white` ,color: props.mode===`dark`?`white`:`black`}} type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-      <strong>C</strong>
-      </button>
-    </h2>
-    <div id="collapseThree" className="accordion-collapse collapse"  data-bs-parent="#accordionExample">
-      <div className="accordion-body">
-      We strive to deliver informative and captivating texts that cater to a wide range of interests and
-       topics. Whether you're seeking articles, blog posts, or thought-provoking essays, we have you covered.      </div>
-    </div>
-  </div>
-</div>
+    <div className='mt-5 container text bg-img'><br />
+      <div className="container ">
+        <h1><strong>About Our NoteBook !</strong></h1>
+        <strong className='container'>Keep Safe Your Notes</strong>
+        <br /><br />
+        <div className="container ">
+          <h3>Our NoteBook: Empowering Your Digital Note Journey</h3>
+          <div className="container">
+            <p >Welcome to "Our Note Book," where we believe in transforming the way you take notes. Our platform is a revolutionary
+              digital notebook designed to elevate your note-taking experience to new heights. With a user-friendly interface, getting
+              started is a breeze, allowing you to focus on capturing and organizing your ideas effortlessly. </p>
 
+            <p>Discover a world of organization and personalization as you create notebooks and sections to structure your notes just the
+              way you like. The rich text formatting, images, and tags feature empowers you to add personality and context to your notes,
+              making them uniquely yours.</p>
 
+            <p>Gone are the days of endless copy-pasting from the web. With our cutting-edge web clipping and bookmarking capability, save
+              valuable content directly into your notes with just a click. Never lose crucial information again with our robust and powerful
+              search function, ensuring quick access to your notes when you need them the most.</p>
 
+            <p>Stay in sync with your notes across all devices – desktop, tablet, and mobile. Our multi-device synchronization feature ensures
+              you're always connected to your ideas, no matter where you are.</p>
 
+            <p>Collaboration has never been simpler. Share your notes with colleagues, friends, or family, inviting them to collaborate seamlessly.
+              Feedback and teamwork have never been more efficient.</p>
+
+            <p>We prioritize your security and privacy. Rest assured that your notes are protected with state-of-the-art security measures. And with
+              reminders and notifications, never miss an important deadline or task again.</p>
+
+            <p>Personalize your notebook further with themes and layout options, making your note-taking experience truly yours.</p>
+
+            <p><strong>Join "Our NoteBook" today and embark on a delightful journey of note-taking and collaboration. Unleash the full potential of your ideas,
+              creativity, and productivity. Together, let's redefine the art of note-taking!</strong></p>
+          </div>
+        </div>
+      </div>
+      <br /><br />
     </div>
   )
 }

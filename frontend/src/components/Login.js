@@ -1,14 +1,30 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
+import Alert from './Alert';
 
 const Login = (props) => {
 
+    const [alert, setAlert] = useState(null);
+
+    const showAlert = (messege, type) => {
+      setAlert({
+        msg: messege,
+        tp: type
+      })
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000)
+    }
+
     const Host = "https://notebookserver.onrender.com";
     let history = useHistory();
+    
     const [credential, setCredential] = useState({ email: "", password: "" });
 
     const handleLogin = async (e) => {
+        props.setProgress(25);
         e.preventDefault();
+        props.setProgress(60);
         const url = `${Host}/api/auth/login`
         const response = await fetch(url, {
             method: "POST",
@@ -18,18 +34,27 @@ const Login = (props) => {
 
             body: JSON.stringify({ email: credential.email, password: credential.password }),
         });
+        props.setProgress(65);
         const json = await response.json();
+        props.setProgress(70);
         if (json.success) {
             // save the auth token and redirect
             localStorage.setItem('token', json.authToken);
-            props.showAlert("Logged in Successfully", "success" )
+            props.setProgress(80);
+            showAlert("Logged in Successfully", "success" );
+            props.setProgress(90);
             history.push("/notes");
+            props.setProgress(100);
         }
         else if(json.servererr){
-            props.showAlert("Internal server error", "danger" );
+            await props.setProgress(90);
+            showAlert("Internal server error", "danger" );
+            props.setProgress(100);
         }
         else {
-            props.showAlert("Invalid Credentials", "danger" );
+            await props.setProgress(90);
+            showAlert("Invalid Credentials", "danger" );
+            props.setProgress(100);
         }
     }
 
@@ -38,21 +63,36 @@ const Login = (props) => {
     }
 
     return (
-        <div>
+        <>
+        {localStorage.getItem('token') ?
+        history.push("/")
+        :
+        <div className='login-bg-img text container'>
+            <div className=' d-flex justify-content-center'>
             <form onSubmit={handleLogin}>
-                <h3 className='my-3 '><strong>Login Form</strong></h3>
-                <div className="mb-3 mx-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label"><strong>Email address</strong></label>
-                    <input type="email" className="form-control" onChange={onChange} name='email' required value={credential.email} id="exampleInputEmail1" aria-describedby="emailHelp" />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                <br />
+                <div className="container ">
+                <h3 className='mt-5 mb-4'><strong>Login Form</strong></h3>
+
+                <div className="container d-flex justify-content-center"><Alert alert={alert} /> </div>
+                
+                <div className="container mb-3">
+                    <label htmlFor="exampleInputEmail1" className="form-label "><strong>Email Address:</strong></label>
+                    <input type="email" className="form-control width " onChange={onChange} name='email' required value={credential.email} id="exampleInputEmail1" aria-describedby="emailHelp" />
+                    <div id="emailHelp" className="form-text text">We'll never share your email with anyone else.</div>
                 </div>
-                <div className="mb-3 mx-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label"><strong>Password</strong></label>
-                    <input type="password" className="form-control" name='password' required onChange={onChange} value={credential.password} id="exampleInputPassword1" />
+                <div className="container mb-3">
+                    <label htmlFor="exampleInputPassword1" className="form-label"><strong>Password:</strong></label>
+                    <input type="password" className="form-control width" name='password' required onChange={onChange} value={credential.password} id="exampleInputPassword1" />
                 </div>
-                <button type="submit" className="btn btn-success mx-5 my-3" >Login</button>
+                <button type="submit" className="btn  btn-outline-light mx-5 my-3 mb-4" >Login</button>
+                </div>
             </form>
+            </div>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         </div>
+}
+        </>
     )
 }
 
