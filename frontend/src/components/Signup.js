@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import Swal from  'sweetalert2';
 
 const Signup = (props) => {
 
@@ -28,25 +29,53 @@ const Signup = (props) => {
         // save the auth token and redirect
         localStorage.setItem('token', json.authToken);
         props.setProgress(80);
-        props.showAlert("Account Created Successfully", "success");
+        // props.showAlert("Account Created Successfully", "success");
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: 'Account Created Successfully',
+          showConfirmButton: false,
+          timer: 2000
+        })
         props.setProgress(90);
         history.push("/notes");
         props.setProgress(100);
       }
       else if (json.already) {
         props.setProgress(90);
-        props.showAlert("This Email Already Register.", "danger");
+        // props.showAlert("This Email Already Register.", "danger");
+        Swal.fire({
+          position: 'top',
+          icon: 'warning',
+          title: 'This Email is Already Registered',
+          showConfirmButton: false,
+          timer: 2000
+        })
         props.setProgress(100);
       }
       else {
         props.setProgress(90);
-        props.showAlert("Invalid Details", "danger");
+        // props.showAlert("Invalid Details", "danger");
+        Swal.fire({
+          position: 'top',
+          icon: 'error',
+          title: 'Invalid Details',
+          showConfirmButton: false,
+          timer: 2000
+        })
         props.setProgress(100);
       }
     }
     else {
       props.setProgress(90);
-      props.showAlert("Confirm Password Not Match", "danger");
+      // props.showAlert("Confirm Password Not Match", "danger");
+      Swal.fire({
+        position: 'top',
+        icon: 'warning',
+        title: 'Password are not matching',
+        showConfirmButton: false,
+        timer: 2000
+      })
       props.setProgress(100);
     }
 
@@ -82,11 +111,11 @@ const Signup = (props) => {
             <label htmlFor="exampleInputPassword1" className="form-label"><strong>Conform Password:</strong></label>
             <input type="password" className="form-control width" onChange={onChange} id="cpassword" value={credential.cpassword} name="cpassword" minLength={5} required />
           </div>
-          <button type="submit" className="btn btn-outline-light mx-5 my-3 mb-4">Signup</button>
+          <button type="submit" className="btn btn-outline-light mx-5 my-3 mb-5">Signup</button>
 
         </form>
       </div>
-      <br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br />
     </div>}
     </>
   )

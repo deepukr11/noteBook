@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
+import Swal from  'sweetalert2';
 
 
 const Navbar = (props) => {
@@ -12,6 +13,13 @@ const Navbar = (props) => {
   const handleLogout = async() => {
     props.setProgress(40);
     await localStorage.removeItem('token');
+    Swal.fire({
+      position: 'top',
+      icon: 'warning',
+      title: 'Logged Out',
+      showConfirmButton: false,
+      timer: 1800
+    })
     props.setProgress(80);
     if (location.pathname === "/") {
       history.push("/");

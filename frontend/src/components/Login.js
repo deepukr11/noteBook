@@ -1,20 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory} from 'react-router-dom';
-import Alert from './Alert';
+import Swal from  'sweetalert2';
 
 const Login = (props) => {
-
-    const [alert, setAlert] = useState(null);
-
-    const showAlert = (messege, type) => {
-      setAlert({
-        msg: messege,
-        tp: type
-      })
-      setTimeout(() => {
-        setAlert(null);
-      }, 2000)
-    }
 
     const Host = "https://notebookserver.onrender.com";
     let history = useHistory();
@@ -41,19 +29,41 @@ const Login = (props) => {
             // save the auth token and redirect
             localStorage.setItem('token', json.authToken);
             props.setProgress(80);
-            showAlert("Logged in Successfully", "success" );
+            // showAlert("Logged in Successfully", "success" );
+            Swal.fire({
+                position: 'top',
+                icon: 'success',
+                title: 'Logged in Successfully',
+                showConfirmButton: false,
+                timer: 2000
+              })
             props.setProgress(90);
             history.push("/notes");
             props.setProgress(100);
         }
         else if(json.servererr){
             await props.setProgress(90);
-            showAlert("Internal server error", "danger" );
+            // showAlert("Internal server error", "danger" );
+            Swal.fire({
+                position: 'top',
+                icon: 'error',
+                title: 'Internal Server Error',
+                showConfirmButton: false,
+                timer: 2000
+              })
             props.setProgress(100);
         }
         else {
             await props.setProgress(90);
-            showAlert("Invalid Credentials", "danger" );
+            // showAlert("Invalid Credentials", "danger" );
+            Swal.fire({
+                position: 'top',
+                icon: 'error',
+                title: 'Invalid Credentials',
+                text: "Please try with correct Credentials",
+                showConfirmButton: false,
+                timer: 2000
+              })
             props.setProgress(100);
         }
     }
@@ -72,10 +82,7 @@ const Login = (props) => {
             <form onSubmit={handleLogin}>
                 <br />
                 <div className="container ">
-                <h3 className='mt-5 mb-4'><strong>Login Form</strong></h3>
-
-                <div className="container d-flex justify-content-center"><Alert alert={alert} /> </div>
-                
+                <h3 className='mt-5 mb-4'><strong>Login Form</strong></h3>                
                 <div className="container mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label "><strong>Email Address:</strong></label>
                     <input type="email" className="form-control width " onChange={onChange} name='email' required value={credential.email} id="exampleInputEmail1" aria-describedby="emailHelp" />

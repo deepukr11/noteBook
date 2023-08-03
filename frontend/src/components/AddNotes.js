@@ -1,22 +1,9 @@
 import React, { useContext, useState } from 'react'
 import noteContext from '../context/notes/noteContext';
 import { useHistory } from 'react-router-dom';
-// import Alert from './Alert';
-
+import Swal from  'sweetalert2';
 
 const AddNotes = (props) => {
-
-    // const [alert, setAlert] = useState(null);
-
-    // const showAlert = (messege, type) => {
-    //   setAlert({
-    //     msg: messege,
-    //     tp: type
-    //   })
-    //   setTimeout(() => {
-    //     setAlert(null);
-    //   }, 2000)
-    // }
 
     let history = useHistory();
     const contextValue = useContext(noteContext);
@@ -24,18 +11,25 @@ const AddNotes = (props) => {
 
     const [note, setNote] = useState({ title: "", description: "", tag: "" });
 
-    const handleSubmit = async (e) => {
-        props.setProgress(10);
-        e.preventDefault();           // page will not  be reloded by using this fuction
+    const handleSubmit =  (e) => {
+        props.setProgress(0);
+        // e.preventDefault();           // page will not  be reloded by using this fuction
         props.setProgress(65);
-        await addNote(note.title, note.description, note.tag);  // addNote function here
+        addNote(note.title, note.description, note.tag);  // addNote function here
         props.setProgress(70);
         setNote({ title: "", description: "", tag: "" });
-        props.setProgress(80);
-        // showAlert("Added Successfully", "success" );
         props.setProgress(90);
+        // showAlert("Added Successfully", "success" );
+        Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: 'Added Successfully',
+            showConfirmButton: false,
+            timer: 1000
+          })  
+          props.setProgress(100);
         history.push("/notes");
-        props.setProgress(100);
+
     }
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value })

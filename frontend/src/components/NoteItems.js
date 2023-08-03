@@ -18,13 +18,20 @@ const NoteItems = (props) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then(async(result) => {
+          }).then((result) => {
             props.setProgress(50);
             if (result.isConfirmed) {
                 props.setProgress(80);
-                await deleteNote(note._id);
+                deleteNote(note._id);
                 props.setProgress(90);
-                props.showAlert("Deleted Successfully", "danger");
+                // props.showAlert("Deleted Successfully", "danger");
+                Swal.fire({
+                    position: 'top',
+                    icon: 'warning',
+                    title: 'Deleted Successfully',
+                    showConfirmButton: false,
+                    timer: 1600
+                  })
                 props.setProgress(99);
             }
             props.setProgress(100);
