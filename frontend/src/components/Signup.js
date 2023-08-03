@@ -64,7 +64,7 @@ const Signup = (props) => {
       <div className="container d-flex justify-content-center">
         <form onSubmit={handleSubmit}> <br />
           <h3 className='mt-5 '><strong>Sign-up Form</strong></h3>
-          <div className="mb-3 mx-3 mt-5">
+          <div className="mb-3 mx-3 mt-3">
             <label htmlFor="exampleInputEmail1" className="form-label"><strong>Name:</strong></label>
             <input type="text" className="form-control width" onChange={onChange} id="name" value={credential.name} name="name" required aria-describedby="emailHelp" />
 

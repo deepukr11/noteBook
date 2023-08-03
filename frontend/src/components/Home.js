@@ -24,11 +24,11 @@ const Home = () => {
                 }
                 </div>
 
-                <h1><strong>Welcome to Our NoteBook !</strong></h1>
+                <h2><strong>Welcome to Our NoteBook !</strong></h2>
                 <strong className='container'>Keep Safe Your Notes</strong>
                 <br /><br />
                 <div className="container ">
-                    <h3>Features of our Notebook:</h3>
+                    <h4>Features of our Notebook:</h4>
                     <div className="container">
                         <strong>User Accounts and Authentication:
                         </strong>
