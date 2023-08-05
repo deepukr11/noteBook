@@ -4,10 +4,12 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
 import NoteState from './context/notes/NoteState';
+import UserState from './context/users/UserState';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AddNotes from './components/AddNotes';
 import Notes from './components/Notes';
+import Profile from './components/Profile';
 import LoadingBar from 'react-top-loading-bar';
 import {
   BrowserRouter as Router,
@@ -26,6 +28,7 @@ function App() {
 
 
       <NoteState>
+        <UserState>
         <Router>
           <LoadingBar
             color='#f11946'
@@ -45,9 +48,12 @@ function App() {
 
             <Route exact path="/signup"><Signup setProgress={setProgress} /></Route>
 
+            <Route exact path="/profile"><Profile setProgress={setProgress} /></Route>
+
           </Switch>
 
         </Router>
+        </UserState>
       </NoteState>
 
     </>

@@ -3,6 +3,7 @@ import React from 'react'
 
 export default function About(props) {
   return (
+    <section className="vh-100" >
     <div className='mt-5 container text bg-img'><br />
       <div className="container ">
         <h1><strong>About Our NoteBook !</strong></h1>
@@ -39,7 +40,8 @@ export default function About(props) {
           </div>
         </div>
       </div>
-      <br /><br />
+      <br />
     </div>
+    </section>
   )
 }

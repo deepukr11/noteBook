@@ -4,6 +4,7 @@ import NoteItems from './NoteItems';
 import { useHistory} from 'react-router-dom';
 import { Link } from "react-router-dom";
 import Swal from  'sweetalert2';
+import {encrypt,decrypt} from 'n-krypta';
 
 const Notes = (props) => {
 
@@ -24,18 +25,40 @@ const Notes = (props) => {
 
   const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" });
 
+      let key=null;
+  if (localStorage.getItem('token')) {
+      key = localStorage.getItem('token').slice(80,100);
+  }
+  else {
+    history.push("/");
+  }
+  
   const ref = useRef(null);
   const refClose = useRef(null);
-
+  
   const updateNote = (currentNote) => {
     props.setProgress(0)
     ref.current.click()
-    setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag })
+    
+    if (localStorage.getItem('token')) {
+    // decrypting data here
+    const decrypted_title = decrypt(currentNote.title, key);
+    const decrypted_description = decrypt(currentNote.description, key);
+    const decrypted_tag = decrypt(currentNote.tag, key);
+    setNote({ id: currentNote._id, etitle: decrypted_title, edescription: decrypted_description, etag: decrypted_tag })
   }
+}
 
   const handleUpdate =  (e) => {
-    props.setProgress(50);
-    editNote(note.id, note.etitle, note.edescription, note.etag);
+
+    if (localStorage.getItem('token')) {
+      props.setProgress(50);
+    const encrypted_title = encrypt(note.etitle, key);
+    const encrypted_description = encrypt(note.edescription, key);
+    const encrypted_tag = encrypt(note.etag, key);
+    
+    editNote(note.id, encrypted_title, encrypted_description, encrypted_tag);
+    }
     props.setProgress(70);
     refClose.current.click();
     props.setProgress(80)
@@ -48,16 +71,19 @@ const Notes = (props) => {
       timer: 2500
     })
     props.setProgress(100)
-  }
+  
+}
+
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value })
   }
 
   return (
-    <div className='login-bg-img Buttoncolor container'>
+    <section className="vh-100">
+    <div className='login-bg-img Buttoncolor'>
       <div className="container">
-        <br />
-        <div className="modal-footer mt-5">        {/* Add note buttone */}
+        <br /><br />
+        <div className="modal-footer mt-2">        {/* Add note buttone */}
           <Link className=" btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl mt-4  ms-auto" to="/addnote" />
         </div>
 
@@ -107,9 +133,9 @@ const Notes = (props) => {
 
         </div>
       </div>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br />
     </div>
+    </section>
   )
 }
 

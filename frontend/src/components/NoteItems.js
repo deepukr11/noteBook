@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import noteContext from '../context/notes/noteContext';
 import Swal from  'sweetalert2';
+import {decrypt} from 'n-krypta';
 
 const NoteItems = (props) => {
 
@@ -8,6 +9,12 @@ const NoteItems = (props) => {
     const { deleteNote } = contextValue; // import deletenote function through context
 
     const { note, updateNote } = props;
+
+    let key = localStorage.getItem('token').slice(80,100);
+    const decrypted_title = decrypt(note.title, key);
+    const decrypted_description = decrypt(note.description, key);
+    const decrypted_tag = decrypt(note.tag, key);
+
     const handleDeleteNote =  () => { 
         props.setProgress(0);
         Swal.fire({
@@ -47,10 +54,10 @@ const NoteItems = (props) => {
                         <div className="mx-2"></div>
                         <i className="fa-solid fa-pen-to-square fa-lg" onClick={() => updateNote(note)} />
                     </div>
-                    <h5 className="card-title"><strong>{note.title}</strong></h5>
-                    <p className="card-text">{note.description}</p>
+                    <h5 className="card-title"><strong>{decrypted_title}</strong></h5>
+                    <p className="card-text">{decrypted_description}</p>
                 </div>
-                <div className="mx-3 mb-1 ms-auto">{note.tag}</div>
+                <div className="mx-3 mb-1 ms-auto">{decrypted_tag}</div>
             </div>
             <div className="date">{new Date(note.date).toGMTString()}</div>
         </div>

@@ -39,3 +39,12 @@ i{
   width: 60;
   height: 3rem;
 }
+
+.iconName{
+  pointer-events: none;
+}
+
+
+.date-color{
+  color: rgb(250, 250, 176);
+}

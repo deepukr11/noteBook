@@ -5,6 +5,7 @@ const fetchuser = require('../midleware/fetchuser');
 const { body, validationResult } = require('express-validator');
 
 
+
 // ROUTE 1: get all the notes using: GET "./routes/notes/fetchallnotes"  loging require
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
      try {
@@ -26,13 +27,17 @@ router.post('/addnote', fetchuser, [     // validation check
 ], async (req, res) => {
      try {
           const { title, description, tag } = req.body;
+                  
           const errors = validationResult(req);    // if there are error => return bad reuest
           if (!errors.isEmpty()) {
                return res.status(400).json({ errors: errors.array() });
           }
           // adding a new note of user
           const note = new Notes({
-               title, description, tag, user: req.user.id
+               title,
+               description,
+               tag,
+               user: req.user.id
           })
           const saveNote = await note.save();  // saving notes in database
           res.json(saveNote);

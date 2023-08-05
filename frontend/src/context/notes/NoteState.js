@@ -3,11 +3,12 @@ import NoteContext from "./noteContext";
 
 const NoteState = (props) => {
 
-  const Host = "https://notebookserver.onrender.com"
+  const Host = "http://localhost:5000"
 
   const notesInitial = [];
 
   const [notes, setNote] = useState(notesInitial);
+  
 
   // Get Notes
   const getNotes = async () => {
@@ -23,7 +24,6 @@ const NoteState = (props) => {
     const json = await response.json();
     setNote(json)
   }
-
 
   // Add Note
   const addNote = async (title, description, tag) => {

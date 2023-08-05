@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useHistory} from 'react-router-dom';
 import Swal from  'sweetalert2';
+import {encrypt} from 'n-krypta';
 
 const Login = (props) => {
 
-    const Host = "https://notebookserver.onrender.com";
+    const Host = "http://localhost:5000";
     let history = useHistory();
     
     const [credential, setCredential] = useState({ email: "", password: "" });
+    const { email, password} = credential;
 
     const handleLogin = async (e) => {
         props.setProgress(25);
@@ -20,14 +22,16 @@ const Login = (props) => {
                 "Content-Type": "application/json",
             },
 
-            body: JSON.stringify({ email: credential.email, password: credential.password }),
+            body: JSON.stringify({email,password }),
         });
         props.setProgress(65);
         const json = await response.json();
         props.setProgress(70);
         if (json.success) {
-            // save the auth token and redirect
+            // save the auth token and encryption key in localStorage and redirect
             localStorage.setItem('token', json.authToken);
+            const key = encrypt(email, Host);
+            localStorage.setItem('key', key);
             props.setProgress(80);
             // showAlert("Logged in Successfully", "success" );
             Swal.fire({
@@ -38,7 +42,7 @@ const Login = (props) => {
                 timer: 2000
               })
             props.setProgress(90);
-            history.push("/notes");
+            history.push("/");
             props.setProgress(100);
         }
         else if(json.servererr){
@@ -77,10 +81,11 @@ const Login = (props) => {
         {localStorage.getItem('token') ?
         history.push("/")
         :
+        <section className="vh-100" >
         <div className='login-bg-img text container'>
             <div className=' d-flex justify-content-center'>
             <form onSubmit={handleLogin}>
-                <br />
+                <br /><br /><br />
                 <div className="container ">
                 <h3 className='mt-5 mb-4'><strong>Login Form</strong></h3>                
                 <div className="container mb-3">
@@ -96,9 +101,8 @@ const Login = (props) => {
                 </div>
             </form>
             </div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         </div>
-}
+        </section>}
         </>
     )
 }

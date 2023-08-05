@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import Swal from  'sweetalert2';
+import {encrypt} from 'n-krypta';
 
 const Signup = (props) => {
 
-  const Host = "https://notebookserver.onrender.com";
+  // const Host = "https://notebookserver.onrender.com";
+  const Host = "http://localhost:5000"
   let history = useHistory();
   const [credential, setCredential] = useState({ name: "", email: "", password: "", cpassword: "" });
 
@@ -26,8 +28,10 @@ const Signup = (props) => {
       const json = await response.json();
       props.setProgress(70);
       if (json.success) {
-        // save the auth token and redirect
+      // save the auth token and encryption key in localStorage and redirect
         localStorage.setItem('token', json.authToken);
+        const key = encrypt(email, Host);
+        localStorage.setItem('key', key);
         props.setProgress(80);
         // props.showAlert("Account Created Successfully", "success");
         Swal.fire({
@@ -38,7 +42,7 @@ const Signup = (props) => {
           timer: 2000
         })
         props.setProgress(90);
-        history.push("/notes");
+        history.push("/");
         props.setProgress(100);
       }
       else if (json.already) {
@@ -89,13 +93,14 @@ const Signup = (props) => {
     <>{localStorage.getItem('token') ?
     history.push("/")
     :
+    <section className="vh-100" >
     <div className='login-bg-img text container'>
       <div className="container d-flex justify-content-center">
-        <form onSubmit={handleSubmit}> <br />
+        <form onSubmit={handleSubmit}> <br /><br /><br />
           <h3 className='mt-5 '><strong>Sign-up Form</strong></h3>
           <div className="mb-3 mx-3 mt-3">
             <label htmlFor="exampleInputEmail1" className="form-label"><strong>Name:</strong></label>
-            <input type="text" className="form-control width" onChange={onChange} id="name" value={credential.name} name="name" required aria-describedby="emailHelp" />
+            <input type="text" className="form-control width" onChange={onChange} id="name" value={credential.name} name="name" minLength={3} required aria-describedby="emailHelp" />
 
           </div>
           <div className="mb-3 mx-3">
@@ -115,8 +120,8 @@ const Signup = (props) => {
 
         </form>
       </div>
-      <br /><br /><br /><br /><br /><br /><br />
-    </div>}
+    </div>
+    </section>}
     </>
   )
 }

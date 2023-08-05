@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 const fetchuser = require('../midleware/fetchuser');
 const { body, validationResult } = require('express-validator');
+const { encrypt} = require('n-krypta'); 
 
 const JWT_SECRET = 'iamhashindia';
 
@@ -22,19 +23,30 @@ router.post('/createuser', [      //validation check
     }
 
     try {
+
+        let key = req.body.email;   // I have useed email as a key for encrypting
+
+        const encrypted_name = encrypt(req.body.name, key);     // encrypting user data(name, email, password)
+        const encrypted_email = encrypt(req.body.email, key);
+        const encrypted_password = encrypt(req.body.password, key);
+        key="";
+        
+
         // check wether the user with the same email exists already 
-        let user = await User.findOne({ email: req.body.email })
+        let user = await User.findOne({ email: encrypted_email })
         if (user) {
             const already = true;
             return res.status(400).json({already, error: "This email already exists." })
         }
-
+         
         const salt = await bcrypt.genSaltSync(10); //creating salt for protect password
-        const hashPass = await bcrypt.hashSync(req.body.password, salt); //add salt in hash password
+        const hashPass = await bcrypt.hashSync(encrypted_password, salt); //add salt in hash password //bcrypted paswword
 
+
+        
         user = await User.create({    //create user
-            name: req.body.name,
-            email: req.body.email,
+            name: encrypted_name,
+            email: encrypted_email,
             password: hashPass,
         });
 
@@ -65,20 +77,26 @@ router.post('/login', [      //validation check
     if (!errors.isEmpty()) {
         return res.status(400).json({ success, errors: errors.array() });
     }
-    const {email,password}=req.body;  //get email and password from request
-
+    
     try {
-        let user = await User.findOne({email}); // get user detailes from database
 
+    let key = req.body.email;   // I have useed email as a key for encrypting
+    const encrypted_email = encrypt(req.body.email, key);  // encrypting user data(name, email, password)
+    const encrypted_password = encrypt(req.body.password, key);
+    key="";
+
+        let user = await User.findOne({email: encrypted_email}); // get user detailes from database
         if(!user){                                // if user not exist
             return res.status(400).json({ success, error: "Please try to login with correct credentials" })
         }
-                                 // if user exist 
-        const passwordCopare = await bcrypt.compare(password , user.password); // compare login password correct or not
+        // if user exist 
+        // const passwordCompare = await bcrypt.compare(req.body.password , user.password); // compare login password correct or not
+        const passwordCopare = await bcrypt.compare(encrypted_password , user.password); 
         if(!passwordCopare){
             return res.status(400).json({success, error: "Please try to login with correct credentials" })
         }
         
+
         const data = {     // if login password is correct
             user: {
                 id: user.id

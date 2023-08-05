@@ -1,18 +1,19 @@
 import React from 'react'
 import { Link, useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import Swal from  'sweetalert2';
+import Swal from 'sweetalert2';
 
 
 const Navbar = (props) => {
-//   
+  //   
 
   let history = useHistory();
   const location = useLocation();
 
-  const handleLogout = async() => {
+  const handleLogout = () => {
     props.setProgress(40);
-    await localStorage.removeItem('token');
+    localStorage.removeItem('token');
+    localStorage.removeItem('key');
     Swal.fire({
       position: 'top',
       icon: 'warning',
@@ -32,6 +33,7 @@ const Navbar = (props) => {
       props.setProgress(100);
     }
   }
+  
   return (
     <div>
       <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-black ">
@@ -49,10 +51,19 @@ const Navbar = (props) => {
                 <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">About</Link>
               </li>
             </ul>
-            
 
-            {localStorage.getItem('token') ? <div className="text-danger">
-              <button onClick={handleLogout} className="btn fa-solid fa-right-from-bracket fa-lg  text-danger"/><div>Logout</div></div>
+
+            {localStorage.getItem('token') ?
+              <div >
+
+                <ul className="navbar-nav Buttoncolor mb-lg-0">
+                        <li className="nav-item"> <Link className="btn fa-solid fa-user  fa-xl" to="/profile" role="button" /> </li>
+                           <div className="my-2"></div>
+                         <li className="nav-item"> <button onClick={handleLogout} className="btn fa-solid fa-right-from-bracket fa-lg  text-danger" /> 
+                         </li>
+                 </ul>
+                
+              </div>
               : location.pathname === "/" ? "" :
                 <form className="d-flex" >
                   {location.pathname === "/login" ? "" : <Link className="btn btn-outline-light fa-beat" to="/login" role="button"><strong>Login</strong></Link>}
@@ -60,6 +71,7 @@ const Navbar = (props) => {
                   {location.pathname === "/signup" ? "" : <Link className="btn btn-outline-light fa-beat" to="/signup" role="button"><strong>Signup</strong></Link>}
                   <div className="mx-2"></div>
                 </form>
+
             }
 
           </div>
@@ -67,7 +79,7 @@ const Navbar = (props) => {
       </nav>
 
     </div>
-    
+
   )
 }
 
