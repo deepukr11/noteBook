@@ -19,28 +19,20 @@ const ProfileItems = () => {
                             <Link className="btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl " to="/addnote" />  {/* Add note buttone */}
                         </div>
                         <div className="col col-md-9 col-lg-7 col-xl-5">
-                    
+
                             <div className="card" >
-                            
-                                            <p className='mb-3 ms-auto mt-1 me-1'><strong>User ID: </strong>{User.id}</p>
+
+                                <p className='mb-3 ms-auto mt-1 me-1'><strong>User ID: </strong>{User.id}</p>
                                 <div className="ms-2">
-                                    
-                                       
-                                            <h5 >
-
-                                                <strong>{User.name}</strong>
-
-                                            </h5>
-
-                                            <p className="mt-2 mb-5" ><strong>{User.email}</strong></p>
-                                            
-                                    
-                                    
+                                    <h5 >
+                                        <strong>{User.name}</strong>
+                                    </h5>
+                                    <p className="mt-2 mb-5" ><strong>{User.email}</strong></p>
                                 </div>
-                                
+
                                 <p className="small text-muted mb-0 ms-1">Registered Date and Time:</p>
                             </div>
-                           
+
                             <p className="mb-0 date-color">{new Date(User.date).toGMTString()}</p>
                         </div>
                     </div>

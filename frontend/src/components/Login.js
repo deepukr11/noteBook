@@ -5,7 +5,7 @@ import {encrypt} from 'n-krypta';
 
 const Login = (props) => {
 
-    const Host = "http://localhost:5000";
+    const Host = "https://notebookserver.onrender.com";
     let history = useHistory();
     
     const [credential, setCredential] = useState({ email: "", password: "" });
