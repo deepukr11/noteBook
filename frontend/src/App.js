@@ -10,6 +10,9 @@ import Signup from './components/Signup';
 import AddNotes from './components/AddNotes';
 import Notes from './components/Notes';
 import Profile from './components/Profile';
+import FindUserByEmail from './components/FindUserByEmail';
+import FindUserById from './components/FindUserById';
+// import UserFriend from './components/UserFriend';s
 import LoadingBar from 'react-top-loading-bar';
 import {
   BrowserRouter as Router,
@@ -48,7 +51,14 @@ function App() {
 
             <Route exact path="/signup"><Signup setProgress={setProgress} /></Route>
 
-            <Route exact path="/profile"><Profile setProgress={setProgress} /></Route>
+            <Route exact path="/profile"><Profile /></Route>
+
+            <Route exact path="/findUserById"><FindUserById setProgress={setProgress} /></Route>
+
+            <Route exact path="/findUserByEmail"><FindUserByEmail setProgress={setProgress} /></Route>
+
+            {/* <Route exact path="/userFriend"><UserFriend setProgress={setProgress} /></Route> */}
+            
 
           </Switch>
 

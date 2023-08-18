@@ -14,9 +14,9 @@ const ProfileItems = () => {
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center mt-2">
                         <div className="modal-footer my-4">
-                            <Link className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Notes</strong></Link>
+                            <Link title="See Notes" className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Notes</strong></Link>
                             <div className="mx-3"></div>
-                            <Link className="btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl " to="/addnote" />  {/* Add note buttone */}
+                            <Link title="Add Note" className="btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl " to="/addnote" />  {/* Add note buttone */}
                         </div>
                         <div className="col col-md-9 col-lg-7 col-xl-5">
 

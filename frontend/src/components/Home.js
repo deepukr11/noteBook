@@ -11,9 +11,10 @@ const Home = () => {
                 <div className="mt-4"><br />
                 {localStorage.getItem('token') ?
                     <div className="modal-footer mt-4">   
-                        <Link className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Notes</strong></Link>
+                        <Link title="See Notes" className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Notes</strong></Link>
                         <div className="mx-3"></div>
-                        <Link className="btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl mt-1 " to="/addnote" />  {/* Add note buttone */}
+
+                        <Link title="Add Note" className="btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl mt-1 " to="/addnote" />  {/* Add note buttone */}
                     </div>
                     :
                     <div className=' mt-4 '>

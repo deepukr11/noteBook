@@ -13,6 +13,7 @@ const Profile = () => {
     useEffect( () => {
       if (localStorage.getItem('token')) {
            getUser();
+      
       }
       else {
         history.push("/");

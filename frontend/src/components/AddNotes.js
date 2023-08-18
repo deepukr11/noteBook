@@ -15,7 +15,7 @@ const AddNotes = (props) => {
 
     const handleSubmit = (e) => {
         props.setProgress(0);
-        // e.preventDefault();           // page will not  be reloded by using this fuction
+        e.preventDefault();           // page will not  be reloded by using this fuction
         props.setProgress(65);
         // encrypting data here
         let key = localStorage.getItem('token').slice(80, 100);

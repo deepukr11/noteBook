@@ -84,7 +84,7 @@ const Notes = (props) => {
       <div className="container">
         <br /><br />
         <div className="modal-footer mt-2">        {/* Add note buttone */}
-          <Link className=" btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl mt-4  ms-auto" to="/addnote" />
+          <Link title="Add Note" className=" btn fa-solid Buttoncolor fa-circle-plus fa-beat fa-2xl mt-4  ms-auto" to="/addnote" />
         </div>
 
         <i ref={ref} className="fa-solid fa-plus fa-2xl mt-4 me-5 ms-auto d-none" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>

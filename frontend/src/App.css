@@ -31,6 +31,10 @@ i{
   background-position: center;
 }
 
+.profile-img{
+  image-rendering: url('./image/profile.jpg');
+}
+
 .width{
   width: 17rem;
 }

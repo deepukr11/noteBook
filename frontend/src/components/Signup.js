@@ -10,7 +10,7 @@ const Signup = (props) => {
   let history = useHistory();
   const [credential, setCredential] = useState({ name: "", email: "", password: "", cpassword: "" });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     props.setProgress(25);
     e.preventDefault();
     props.setProgress(60);
@@ -98,20 +98,23 @@ const Signup = (props) => {
       <div className="container d-flex justify-content-center">
         <form onSubmit={handleSubmit}> <br /><br /><br />
           <h3 className='mt-5 '><strong>Sign-up Form</strong></h3>
+          
           <div className="mb-3 mx-3 mt-3">
             <label htmlFor="exampleInputEmail1" className="form-label"><strong>Name:</strong></label>
             <input type="text" className="form-control width" onChange={onChange} id="name" value={credential.name} name="name" minLength={3} required aria-describedby="emailHelp" />
-
           </div>
+
           <div className="mb-3 mx-3">
             <label htmlFor="exampleInputEmail1" className="form-label"><strong>Email Address:</strong></label>
             <input type="email" className="form-control width" onChange={onChange} id="email" value={credential.email} name="email" aria-describedby="emailHelp" required />
             <div id="emailHelp" className="form-text text">We'll never share your email with anyone else.</div>
           </div>
+
           <div className="mb-3 mx-3">
             <label htmlFor="exampleInputPassword1" className="form-label"><strong>Password:</strong></label>
             <input type="password" className="form-control width" onChange={onChange} id="password" value={credential.password} name="password" minLength={5} required />
           </div>
+
           <div className="mb-3 mx-3">
             <label htmlFor="exampleInputPassword1" className="form-label"><strong>Conform Password:</strong></label>
             <input type="password" className="form-control width" onChange={onChange} id="cpassword" value={credential.cpassword} name="cpassword" minLength={5} required />

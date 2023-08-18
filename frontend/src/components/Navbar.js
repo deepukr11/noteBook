@@ -34,6 +34,23 @@ const Navbar = (props) => {
     }
   }
   
+  const handleSearch = ()=>{
+    Swal.fire({
+      title: 'Find Your Friend!',
+      showDenyButton: true,
+      confirmButtonText: 'Search By User Email',
+      denyButtonText: `Search By ID`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        history.push("/findUserByEmail");
+      } else if (result.isDenied) {
+        history.push("/findUserById")
+      }
+    })
+  }
+
+
+
   return (
     <div>
       <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-black ">
@@ -57,9 +74,16 @@ const Navbar = (props) => {
               <div >
 
                 <ul className="navbar-nav Buttoncolor mb-lg-0">
-                        <li className="nav-item"> <Link className="btn fa-solid fa-user  fa-xl" to="/profile" role="button" /> </li>
+                  {/* Find frinends button */}
+                <li className="nav-item" title="Search Friend"> 
+                <button onClick={handleSearch} className="btn fa-sharp fa-solid fa-magnifying-glass fa-xl"  role="button" />
+                 </li>
                            <div className="my-2"></div>
-                         <li className="nav-item"> <button onClick={handleLogout} className="btn fa-solid fa-right-from-bracket fa-lg  text-danger" /> 
+                           {/* get profile info button */}
+                        <li className="nav-item" title="Profile"> <Link className="btn fa-solid fa-user  fa-xl" to="/profile" role="button" /> </li>
+                           <div className="my-2"></div>
+                           {/* logout button */}
+                         <li className="nav-item" title='Logout'> <button onClick={handleLogout} className="btn fa-solid fa-right-from-bracket fa-lg  text-danger" /> 
                          </li>
                  </ul>
                 
