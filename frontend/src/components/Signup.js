@@ -6,6 +6,7 @@ import {encrypt} from 'n-krypta';
 const Signup = (props) => {
 
   const Host = "https://notebookserver.onrender.com";
+  
   // const Host = "http://localhost:5000"
   let history = useHistory();
   const [credential, setCredential] = useState({ name: "", email: "", password: "", cpassword: "" });
