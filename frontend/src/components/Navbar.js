@@ -76,7 +76,7 @@ const Navbar = (props) => {
                 <ul className="navbar-nav Buttoncolor mb-lg-0">
                   {/* Find frinends button */}
                 <li className="nav-item" title="Search Friend"> 
-                <button onClick={handleSearch} className="btn fa-sharp fa-solid fa-magnifying-glass fa-xl"  role="button" />
+                <button onClick={handleSearch} className="btn fa-sharp fa-solid fa-magnifying-glass fa-xl"  />
                  </li>
                            <div className="my-2"></div>
                            {/* get profile info button */}
