@@ -8,11 +8,11 @@
 # testing
 /coverage
 
+/build
 # production
 
 # misc
-/build
-
+  
 .DS_Store
 node_modules
 .env.local
