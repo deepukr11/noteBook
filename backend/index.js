@@ -15,6 +15,12 @@ app.use('/api/notes',require('./routes/notes'))
 
 app.use('/api/user',require('./routes/user'))
 
+app.use('/api/requests',require('./routes/requests'))
+
+app.use('/api/friends',require('./routes/friends'))
+
+
+
 
 
 app.get('/' ,(req , res) => {

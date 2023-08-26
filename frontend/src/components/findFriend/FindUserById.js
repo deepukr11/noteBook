@@ -1,15 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { useHistory, Link } from 'react-router-dom';
-import userContext from '../context/users/userContext';
-import profile from '../image/profile.jpg';
-
+import userContext from '../../context/users/userContext';
+import profile from '../../image/profile.jpg';
+import { Link, useHistory } from "react-router-dom";
 
 
 const FindUserById = () => {
-
+    localStorage.removeItem('findBE');
+    localStorage.removeItem('viewFriendProfile');
+    localStorage.removeItem('friendshipToken');
+    
     let history = useHistory();
     const contextValue = useContext(userContext);
     const { findUserById, findUser, successChange } = contextValue;
+
 
     const [findId, setFindId] = useState({ id: "" });
 
@@ -28,6 +31,12 @@ const FindUserById = () => {
         findUserById(findId.id);
     }
 
+    const handleViewProfile = (e) => {
+        e.preventDefault();
+        localStorage.setItem('viewFriendProfile', 1);
+        history.push("/viewUser");
+    }
+
     const onChange = (e) => {
         setFindId({ ...findId, [e.target.name]: e.target.value })
     }
@@ -39,22 +48,25 @@ const FindUserById = () => {
                     <div className="mb-3">"</div>
                     {findUser.success ?
                         <div className="row d-flex justify-content-center align-items-center mt-5 container">
-                        <div className="modal-footer my-2">
-                            <Link title="See Your Notes" className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Your Notes</strong></Link>
-                        </div>
-                        <div className="col col-md-9 col-lg-7 col-xl-5">
-                            <div className="card " >
-                                   <div className='ms-2'>
-                                    <img src={profile} width="100" height="140" alt="Profile" />
-                                    <strong><strong>User ID: </strong>{findUser.id}</strong>                                  
+                            <div className="modal-footer my-2">
+                                <Link title="See Your Notes" className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Your Notes</strong></Link>
+                            </div>
+                            <div className="col col-md-9 col-lg-7 col-xl-5">
+                                <div className="card " >
+                                    <div className='ms-2'>
+                                        <img src={profile} width="100" height="140" alt="Profile" />
+                                        <strong><strong>User ID: </strong>{findUser.id}</strong>
+                                    </div>
+                                </div>
+                                <div className="modal-footer my-3">
+                                    <button title="View Profile" onClick={handleViewProfile} className=" btn btn-outline-success ms-auto rounded-circle" ><strong>View</strong></button>
                                 </div>
                             </div>
                         </div>
-                    </div>
                         :
                         <div>
                             <div className="modal-footer mt-4 container">
-                                <Link title="Search User Email" className="btn btn-outline-light mx-5 mt-5" to="/findUserByEmail">Search By Email</Link>
+                                <Link title="Search User Email" className="btn btn-outline-light mx-5 mt-5" to="/findFriendByEmail">Search By Email</Link>
                             </div>
                             <form onSubmit={handleSearchById}>
                                 <div className="container">

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import userContext from '../../context/users/userContext';
 import { useHistory} from 'react-router-dom';
 import Swal from  'sweetalert2';
 import {encrypt} from 'n-krypta';
@@ -7,7 +8,10 @@ const Login = (props) => {
 
     const Host = "https://notebookserver.onrender.com";
     // const Host = "http://localhost:5000"
+    
     let history = useHistory();
+    const contextValue = useContext(userContext);
+    const { getUser } = contextValue;
     
     const [credential, setCredential] = useState({ email: "", password: "" });
     const { email, password} = credential;
@@ -34,6 +38,7 @@ const Login = (props) => {
             const key = encrypt(email, Host);
             localStorage.setItem('key', key);
             props.setProgress(80);
+            getUser();
             // showAlert("Logged in Successfully", "success" );
             Swal.fire({
                 position: 'top',

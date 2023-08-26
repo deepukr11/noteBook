@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import noteContext from '../context/notes/noteContext';
+import noteContext from '../../context/notes/noteContext';
 import Swal from  'sweetalert2';
 import {decrypt} from 'n-krypta';
 
@@ -22,8 +22,8 @@ const NoteItems = (props) => {
             text: "You want to Delete this Note!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             props.setProgress(50);
@@ -59,7 +59,7 @@ const NoteItems = (props) => {
                 </div>
                 <div className="mx-3 mb-1 ms-auto">{decrypted_tag}</div>
             </div>
-            <div className="date">{new Date(note.date).toGMTString()}</div>
+            <div className="date date-color">{new Date(note.date).toGMTString()}</div>
         </div>
     )
 }

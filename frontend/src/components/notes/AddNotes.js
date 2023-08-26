@@ -1,10 +1,14 @@
 import React, { useContext, useState } from 'react'
-import noteContext from '../context/notes/noteContext';
+import noteContext from '../../context/notes/noteContext';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { encrypt } from 'n-krypta';
 
 const AddNotes = (props) => {
+    
+    localStorage.removeItem('findBE');
+    localStorage.removeItem('viewFriendProfile');
+    localStorage.removeItem('friendshipToken');
 
     let history = useHistory();
     const contextValue = useContext(noteContext);
@@ -21,7 +25,13 @@ const AddNotes = (props) => {
         let key = localStorage.getItem('token').slice(80, 100);
         const encrypted_title = encrypt(title, key);
         const encrypted_description = encrypt(description, key);
-        const encrypted_tag = encrypt(tag, key);
+        let encrypted_tag = tag;
+        if(tag){
+             encrypted_tag = encrypt(tag, key);           
+        }
+        else{
+             encrypted_tag = tag;           
+        }
 
         addNote(encrypted_title, encrypted_description, encrypted_tag);  // addNote function here
         props.setProgress(70);

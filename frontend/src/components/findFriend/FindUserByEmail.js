@@ -1,12 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom';
-import userContext from '../context/users/userContext';
-import profile from '../image/profile.jpg';
-
+import userContext from '../../context/users/userContext';
+import profile from '../../image/profile.jpg';
 
 
 
 const FindUserByEmail = () => {
+
+    localStorage.removeItem('findBE');
+    localStorage.removeItem('viewFriendProfile');
+    localStorage.removeItem('friendshipToken');
 
     let history = useHistory();
     const contextValue = useContext(userContext);
@@ -30,6 +33,13 @@ const FindUserByEmail = () => {
         await findUserByEmail(findEmail.email);
     }
 
+    const handleViewProfile = (e) => {
+        e.preventDefault();
+        localStorage.setItem('viewFriendProfile', 1);
+        localStorage.setItem('findBE', 1);
+        history.push("/viewUser");
+    }
+
     const onChange = (e) => {
         setFindEmail({ ...findEmail, [e.target.name]: e.target.value })
     }
@@ -39,27 +49,30 @@ const FindUserByEmail = () => {
             <div className='login-bg-img'>
                 <section className="vh-100" >
                     <div className="mb-3">"</div>
-                    {findUser.success ?                    
-                            <div className="row d-flex justify-content-center align-items-center mt-5 container">
-                                <div className="modal-footer my-2">
-                                    <Link title="See Your Notes" className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Your Notes</strong></Link>
-                                </div>
-                                <div className="col col-md-9 col-lg-7 col-xl-5">
-                                    <div className="card " >
-                                        <div className="d-flex justify-content-center align-items-center mt-2">
-                                            <strong><strong>{findUser.name}</strong></strong>
-                                        </div>
-                                        <div className='ms-1'>
-                                            <img src={profile} width="100" height="140" alt="Profile" />
-                                            {findUser.email}
-                                        </div>
+                    {findUser.success ?
+                        <div className="row d-flex justify-content-center align-items-center mt-5 container">
+                            <div className="modal-footer my-2">
+                                <Link title="See Your Notes" className=" btn btn-outline-light ms-auto rounded-circle" to="/notes"><strong>Your Notes</strong></Link>
+                            </div>
+                            <div className="col col-md-9 col-lg-7 col-xl-5">
+                                <div className="card " >
+                                    <div className="d-flex justify-content-center align-items-center mt-2">
+                                        <strong><strong>{findUser.name}</strong></strong>
+                                    </div>
+                                    <div className='ms-1'>
+                                        <img src={profile} width="100" height="140" alt="Profile" />
+                                        {findUser.email}
                                     </div>
                                 </div>
+                                <div className="modal-footer my-3">
+                                    <button title="View Profile" onClick={handleViewProfile} className=" btn btn-outline-success ms-auto rounded-circle" ><strong>View</strong></button>
+                                </div>
                             </div>
+                        </div>
                         :
                         <div>
                             <div className="modal-footer mt-4 container">
-                                <Link title="Search User ID" className="btn btn-outline-light ms-auto mt-5" to="/findUserById">Search By User ID</Link>
+                                <Link title="Search User ID" className="btn btn-outline-light ms-auto mt-5" to="/findFriendById">Search By User ID</Link>
                             </div>
                             <form onSubmit={handleSearchByEmail}>
                                 <div className="container ">

@@ -49,7 +49,7 @@ router.post('/addnote', fetchuser, [     // validation check
 })
 
 
-// ROUTE 3: updating a note using: PUT "./routes/notes/updatenote"  loging require
+// ROUTE 3: updating a note using: PUT "/routes/notes/updatenote"  loging require
 
 router.put('/updatenote/:id', fetchuser, async (req, res) => {
      try {
@@ -82,7 +82,6 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
 
 
 // ROUTE 4: Delete a note using: DELETE "./routes/notes/deletenote"  loging require
-
 
 router.delete('/deletenote/:id', fetchuser, async (req, res) => {
      try {

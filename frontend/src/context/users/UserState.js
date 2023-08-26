@@ -13,8 +13,15 @@ const UserState = (props) => {
 
   const [User, setUser] = useState({ id: "", name: "", email: "", date: "" });
 
-  const [findUser, setFindUser] = useState({ success: false, id: "", name: "", email: "" });
+  const [findUser, setFindUser] = useState({ success: false, relation: "", reqfrndId: "", id: "", name: "", email: "" });
 
+  const [userName, setUserName] = useState ("");
+
+
+
+  const successChange = ()=>{
+    setFindUser ({success: false})
+  }
 
   // Get User Detailes
   const getUser = async () => {
@@ -28,11 +35,12 @@ const UserState = (props) => {
     });
 
     const json = await response.json();
-    const key = decrypt(localStorage.getItem('key'), Host)
+    const key = decrypt(localStorage.getItem('key'), Host);
     // decrypting User data
     const decrypted_name = decrypt(json.name, key);
-    const decrypted_email = decrypt(json.email, key);
+    const decrypted_email = decrypt(localStorage.getItem('key'), Host);
     setUser({ id: json._id, name: decrypted_name, email: decrypted_email, date: json.date });
+    localStorage.setItem('Id', json._id);
   }
 
   // Find User By Registered Id
@@ -49,7 +57,7 @@ const UserState = (props) => {
 
     const json = await response.json();
     if (json.success) {
-      setFindUser({ success: json.success, id: json.user._id });
+      setFindUser({ success: json.success, relation: json.relation, reqfrndId: json.reqfrndId, id: json.user._id });
       Swal.fire({
         position: 'top',
         icon: 'success',
@@ -83,7 +91,7 @@ const UserState = (props) => {
 
     const json = await response.json();
     if (json.success) {
-      await setFindUser({ success: json.success, id: json.userId, name: json.name, email: json.email });
+      await setFindUser({ success: json.success, relation: json.relation, reqfrndId: json.reqfrndId, id: json.findId, name: json.name, email: json.email });
       Swal.fire({
         position: 'top',
         icon: 'success',
@@ -103,12 +111,29 @@ const UserState = (props) => {
     }
   }
 
-  const successChange = ()=>{
-    setFindUser ({success: false})
+   // Find User By Registered Id
+   const findUserName = async (id, email) => {
+    const url = `${Host}/api/user/findUserName/${id}`
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('token')
+      },
+      body: JSON.stringify({email}),
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      setUserName(json.name);
+    }
   }
 
+
+ 
+
   return (
-    <UserContext.Provider value={{ getUser, findUserById, findUserByEmail, User, findUser, successChange}}>
+    <UserContext.Provider value={{ getUser, findUserById, findUserByEmail, findUserName, User, findUser, userName, successChange}}>
       {props.children}
     </UserContext.Provider>
   )

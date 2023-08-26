@@ -22,4 +22,4 @@ date: {
 
   });
   const User=mongoose.model('user', UserSchema);
-  module.exports= User;
+  module.exports = User;

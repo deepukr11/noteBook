@@ -11,30 +11,43 @@ const Navbar = (props) => {
   const location = useLocation();
 
   const handleLogout = () => {
-    props.setProgress(40);
-    localStorage.removeItem('token');
-    localStorage.removeItem('key');
     Swal.fire({
-      position: 'top',
+      title: 'Logout',
       icon: 'warning',
-      title: 'Logged Out',
-      showConfirmButton: false,
-      timer: 1800
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Logout'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        props.setProgress(40);
+        localStorage.removeItem('token');
+        localStorage.removeItem('key');
+        localStorage.removeItem('findBE');
+        localStorage.removeItem('viewFriendProfile');
+        localStorage.removeItem('friendshipToken');
+        localStorage.removeItem('Id');
+        Swal.fire({
+          position: 'top',
+          icon: 'warning',
+          title: 'Logged Out',
+          showConfirmButton: false,
+          timer: 1800
+        })
+        props.setProgress(80);
+        if (location.pathname === "/") {
+          history.push("/");
+          props.setProgress(90);
+          window.location.reload();     // reload the page
+          props.setProgress(100);
+        } else {
+          props.setProgress(90);
+          history.push("/");
+          props.setProgress(100);
+        }
+      }
     })
-    props.setProgress(80);
-    if (location.pathname === "/") {
-      history.push("/");
-      props.setProgress(90);
-      window.location.reload();     // reload the page
-      props.setProgress(100);
-    } else {
-      props.setProgress(90);
-      history.push("/");
-      props.setProgress(100);
-    }
   }
-  
-  const handleSearch = ()=>{
+
+  const handleSearch = () => {
     Swal.fire({
       title: 'Find Your Friend!',
       showDenyButton: true,
@@ -42,9 +55,9 @@ const Navbar = (props) => {
       denyButtonText: `Search By ID`,
     }).then((result) => {
       if (result.isConfirmed) {
-        history.push("/findUserByEmail");
+        history.push("/findFriendByEmail");
       } else if (result.isDenied) {
-        history.push("/findUserById")
+        history.push("/findFriendById")
       }
     })
   }
@@ -74,19 +87,34 @@ const Navbar = (props) => {
               <div >
 
                 <ul className="navbar-nav Buttoncolor mb-lg-0">
+
+                  <li className="nav-item">
+                    <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/friends">Friends</Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/receivedRequests">confirm</Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/sentRequests">Requested</Link>
+                  </li>
                   {/* Find frinends button */}
-                <li className="nav-item" title="Search Friend"> 
-                <button onClick={handleSearch} className="btn fa-sharp fa-solid fa-magnifying-glass fa-xl"  />
-                 </li>
-                           <div className="my-2"></div>
-                           {/* get profile info button */}
-                        <li className="nav-item" title="Profile"> <Link className="btn fa-solid fa-user  fa-xl" to="/profile" role="button" /> </li>
-                           <div className="my-2"></div>
-                           {/* logout button */}
-                         <li className="nav-item" title='Logout'> <button onClick={handleLogout} className="btn fa-solid fa-right-from-bracket fa-lg  text-danger" /> 
-                         </li>
-                 </ul>
-                
+                  <li className="nav-item" title="Search Friend">
+                    <button onClick={handleSearch} className="btn fa-sharp fa-solid fa-magnifying-glass fa-xl" />
+                  </li>
+                  <div className="my-2"></div>
+
+                  {/* get profile info button */}
+                  <li className="nav-item" title="Profile">
+                    <Link className="btn fa-solid fa-user  fa-xl" to="/profile" role="button" />
+                  </li>
+                  <div className="my-2"></div>
+                  {/* logout button */}
+                  <li className="nav-item" title='Logout'> <button onClick={handleLogout} className="btn fa-solid fa-right-from-bracket fa-lg  text-danger" />
+                  </li>
+                </ul>
+
               </div>
               : location.pathname === "/" ? "" :
                 <form className="d-flex" >
