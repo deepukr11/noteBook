@@ -2,22 +2,26 @@ import { useState } from "react";
 import UserContext from "./userContext";
 import { decrypt } from 'n-krypta';
 import Swal from 'sweetalert2';
+import profile from '../../image/profile.jpg'
 
 
 
 const UserState = (props) => {
 
-  const Host = "https://notebookserver.onrender.com";
-  // const Host = "http://localhost:5000"
+  // const Host = "https://notebookserver.onrender.com";
+  const Host = "http://localhost:5000"
 
 
-  const [User, setUser] = useState({ id: "", name: "", email: "", date: "" });
+  const [myProfileDetails, setMyProfileDetails] = useState({userId: "", 
+                                                             name: "", 
+                                                             email: "",  
+                                                             date: "", 
+                                                             profilePhoto: "" ,
+                                                             relation: "myProfile"});
 
   const [findUser, setFindUser] = useState({ success: false, relation: "", reqfrndId: "", id: "", name: "", email: "" });
 
   const [userName, setUserName] = useState ("");
-
-
 
   const successChange = ()=>{
     setFindUser ({success: false})
@@ -39,8 +43,15 @@ const UserState = (props) => {
     // decrypting User data
     const decrypted_name = decrypt(json.name, key);
     const decrypted_email = decrypt(localStorage.getItem('key'), Host);
-    setUser({ id: json._id, name: decrypted_name, email: decrypted_email, date: json.date });
     localStorage.setItem('Id', json._id);
+    setMyProfileDetails({ 
+                          userId: json._id,
+                          name: decrypted_name, 
+                          email: decrypted_email, 
+                          date: json.date,
+                          profilePhoto: profile,
+                          type: "myProfile"
+                           });
   }
 
   // Find User By Registered Id
@@ -133,7 +144,7 @@ const UserState = (props) => {
  
 
   return (
-    <UserContext.Provider value={{ getUser, findUserById, findUserByEmail, findUserName, User, findUser, userName, successChange}}>
+    <UserContext.Provider value={{ getUser, findUserById, findUserByEmail, findUserName, myProfileDetails, findUser, userName, successChange}}>
       {props.children}
     </UserContext.Provider>
   )

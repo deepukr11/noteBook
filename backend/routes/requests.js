@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Requests = require('../models/Requests');
+const User = require('../models/User');
 const fetchuser = require('../midleware/fetchuser');
-const { encrypt} = require('n-krypta');
+const { encrypt, decrypt} = require('n-krypta');
 
 
 
@@ -12,14 +13,19 @@ const { encrypt} = require('n-krypta');
 router.post('/sendRequest', fetchuser, async (req, res) => {
      let success = false;
      try {
-          const { user2, user1email, user2e } = req.body;
+          const { user2, user1email, user2e, name2 } = req.body;
+          const user1Name = await User.findById(req.user.id).select("name");
+          const decryptedName1 = decrypt(user1Name.name, user1email);
+          const name1 = encrypt(decryptedName1, req.user.id);
           const user1e = encrypt(user1email, req.user.id); 
           // adding a new Request of user
           const request = new Requests({
                user1: req.user.id,  // Request Sender ID
                user2,               // Request Receiver ID
                user1e,              // Request Sender email
-               user2e               // Request Receiver email
+               name1,
+               user2e,               // Request Receiver email
+               name2
           })
           const saveRequest = await request.save();  // saving Request in database
           success = true;
@@ -36,7 +42,7 @@ router.post('/sendRequest', fetchuser, async (req, res) => {
 
 router.get('/fetchSenderRequest', fetchuser, async (req, res) => {
      try {
-          const senderRequest = await Requests.find({ user1: req.user.id });  // fetching all request of sender from database
+          const senderRequest = await Requests.find({ user1: req.user.id }).sort({date: -1}); // fetching all request of sender from database
           res.json(senderRequest);
 
      } catch (error) {
@@ -49,7 +55,7 @@ router.get('/fetchSenderRequest', fetchuser, async (req, res) => {
 
 router.get('/fetchReceiverRequest', fetchuser, async (req, res) => {
      try {
-          const receiverRequest = await Requests.find({ user2: req.user.id });  // fetching all request of receiver from database
+          const receiverRequest = await Requests.find({ user2: req.user.id }).sort({date: -1});  // fetching all request of receiver from database
           res.json(receiverRequest);
      } catch (error) {
           console.error(error.messese);

@@ -14,7 +14,15 @@ const RequestSchema = new Schema({
         type: String,
         requireed: true
     },
+    name1:  {                                // Request Sender name
+        type: String,
+        requireed: true
+    }, 
     user2e: {                                // Request Receiver email
+        type: String,
+        default: ""
+    },
+    name2: {                                // Request Receiver name
         type: String,
         default: ""
     },

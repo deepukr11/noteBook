@@ -9,7 +9,7 @@ const { body, validationResult } = require('express-validator');
 // ROUTE 1: get all the notes using: GET "./routes/notes/fetchallnotes"  loging require
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
      try {
-          const notes = await Notes.find({ user: req.user.id });  // fetching all notes of user from database
+          const notes = await Notes.find({ user: req.user.id }).sort({date: -1});  // fetching all notes of user from database
           res.json(notes);
 
      } catch (error) {

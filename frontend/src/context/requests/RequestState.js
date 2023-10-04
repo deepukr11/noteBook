@@ -7,8 +7,8 @@ import Swal from 'sweetalert2';
 
 const RequestState = (props) => {
 
-  const Host = "https://notebookserver.onrender.com";
-  // const Host = "http://localhost:5000"
+  // const Host = "https://notebookserver.onrender.com";
+  const Host = "http://localhost:5000"
 
 
   const notesInitial = [];
@@ -19,7 +19,7 @@ const RequestState = (props) => {
 
 
   // send Request
-  const sendRequest = async (user2, user2e) => {
+  const sendRequest = async (user2, user2e, name2) => {
     const url = `${Host}/api/requests/sendRequest`
     const user1email = decrypt(localStorage.getItem('key'), Host);  // decrypting user email
     const response = await fetch(url, {
@@ -29,7 +29,7 @@ const RequestState = (props) => {
         "auth-token": localStorage.getItem('token')
       },
 
-      body: JSON.stringify({ user2, user1email, user2e }),
+      body: JSON.stringify({ user2, user1email, user2e, name2 }),
     });
     const json = await response.json();
     if (json.success) {

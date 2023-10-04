@@ -16,7 +16,6 @@ const Friends = () => {
     let key = 0;
 
     const friendContextValu = useContext(friendContext);
-
     const { getFriends, friends } = friendContextValu;
 
     useEffect(() => {

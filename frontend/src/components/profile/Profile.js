@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom';
 
 const Profile = () => {
 
-  const contextValue = useContext(userContext);
   let history = useHistory();
+  const contextValue = useContext(userContext);
   const { getUser } = contextValue;
 
   useEffect(() => {

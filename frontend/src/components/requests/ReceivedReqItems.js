@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { decrypt } from 'n-krypta';
-import userContext from '../../context/users/userContext';
 import requestContext from '../../context/requests/requestContext';
 import friendContext from '../../context/friends/friendContext';
 import profile from '../../image/profile.jpg';
@@ -10,16 +9,16 @@ import Swal from 'sweetalert2';
 const ReceivedReqItems = (props) => {
     const request = props.request;
 
-    const contextValue = useContext(userContext);
     const requestContextValue = useContext(requestContext);
     const friendContextValu = useContext(friendContext);
 
-    const { findUserName, userName } = contextValue;
     const { ignoreRequest } = requestContextValue;
     const { acceptFriendReq } = friendContextValu;
 
-    const userEmail = decrypt(request.user2e, request.user2);
-    findUserName(request.user2, userEmail);
+    let name = "";
+    if(request.name1 && request.user1){
+        name = decrypt(request.name1, request.user1);
+    }
 
     const handleIgnoreRequest = () => {
         Swal.fire({
@@ -57,7 +56,7 @@ const ReceivedReqItems = (props) => {
             <div className="card ">
                 <div className="ms-2">
                     <img src={profile} width="100" height="140" alt="Profile" />
-                    <strong><strong></strong>{userName}</strong>
+                    <strong><strong></strong>{name}</strong>
                 </div>
                 <div className="date">{new Date(request.date).toGMTString()}
                 </div>

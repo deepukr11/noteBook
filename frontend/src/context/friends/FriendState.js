@@ -1,119 +1,115 @@
 import { useState } from "react";
 import FriendContext from "./friendContext";
 import { decrypt } from 'n-krypta';
-import Swal from 'sweetalert2';
 
 const FriendState = (props) => {
 
-  const Host = "https://notebookserver.onrender.com";
-  // const Host = "http://localhost:5000"
+  // const Host = "https://notebookserver.onrender.com";
+  const Host = "http://localhost:5000"
+
+  const [users, setUsers] = useState([]);
+
+  const myID = localStorage.getItem('Id');
+
+  // const [friendData, setFriendData] = useState([]);
 
 
-  const notesInitial = [];
-
-  const [friends, setFriends] = useState(notesInitial);
-  const [friendDetails, setfriendDetails] = useState(notesInitial);
-  
-
-  
   // Accept Friend Request
 
   const acceptFriendReq = async (reqId) => {
-      const url = `${Host}/api/friends/acceptRequest/${reqId}`
-      const user2email = decrypt(localStorage.getItem('key'), Host);  // decrypting user email
-      const response = await fetch(url, {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-              "auth-token": localStorage.getItem('token')
-            },
+    const url = `${Host}/api/friends/acceptRequest/${reqId}`
+    const user2email = decrypt(localStorage.getItem('key'), Host);  // decrypting user email
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('token')
+      },
 
-            body: JSON.stringify({user2email}),
-        });
-        const json = await response.json();
-        if (json.success) {
-            setFriends(friends.concat(json));
-            Swal.fire({
-              position: 'top',
-              icon: 'success',
-              title: 'Acceped',
-              showConfirmButton: false,
-              timer: 1000
-            })
+      body: JSON.stringify({ user2email }),
+    });
+    // eslint-disable-next-line
+    const json = await response.json();
+  }
+
+  // Get all Friends
+  const getFriends = async () => {
+    const url = `${Host}/api/friends/fetchFriends`
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('token')
+      },
+    });
+    const json = await response.json();
+    return json;
+  }
+
+  const decryptFriendName = () => {
+      const friendsData = [];
+      const fetchData = async () => {
+        let data = await getFriends();
+        setUsers(data);
+      }
+      fetchData();
+      // eslint-disable-next-line
+      users.map((friend) => {
+        let profileDetails = {friendshipID: friend._id, 
+                              UserID: "", 
+                              name: "", 
+                              email: "", 
+                              date: friend.date, 
+                              relation: "friend"};
+
+        if (myID === friend.user1) {
+          if (friend.name2 && friend.user2) {
+            profileDetails.id = friend.user2;
+            profileDetails.name = decrypt(friend.name2, friend.user2); // decrypt friend name
+            if (friend.user2e) {
+              profileDetails.email = decrypt(friend.user2e, friend.user2);  // decrypt friend email
+            }
+            friendsData.push(profileDetails);
           }
-          else {
-            Swal.fire({
-              position: 'top',
-              icon: 'warning',
-              title: 'Sorry! Internal server error',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }        
-    }
-    
-   // Get all Friends
-    const getFriends = async () => {
-      const url = `${Host}/api/friends/fetchFriends`
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem('token')
-        },
-      });
-      const json = await response.json();
-      setFriends(json)
-    }
-
-
-
-    const getFriendDetails = async (friendId) => {
-      const url = `${Host}/api/friends/getFriend/${friendId}`
-      const response = await fetch(url, {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-              "auth-token": localStorage.getItem('token')
-            },
-
-        });
-        const json = await response.json();
-        localStorage.setItem('friendshipToken', json.friendshipToken);
-        setfriendDetails(json.friend);
         }
+        else {
+          if (friend.name1 && friend.user1) {
+            profileDetails.id = friend.user1;
+            profileDetails.name = decrypt(friend.name1, friend.user1);
+            if (friend.user1e) {
+              profileDetails.email = decrypt(friend.user1e, friend.user1);  // decrypt friend email
+            }
+            friendsData.push(profileDetails);
+          }
+        }
+      })
+      return friendsData;
+  }
 
+  // Unfriend
+  const Unfriend = async (friendId) => {
+    const url = `${Host}/api/friends/unfriend/${friendId}`
 
-
-//   // Unfriend
-  const Unfriend = async () => {
-    const url = `${Host}/api/friends/unfriend`
-       
-    const response = await fetch(url, {                 
+    const response = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem('token'),
-        "friendshipToken": localStorage.getItem('friendshipToken')
       },
 
-    }); 
+    });
+    // eslint-disable-next-line
     const json = await response.json();
-    if (json.success) {
-      Swal.fire({
-        position: 'top',
-        icon: 'warning',
-        title: 'Unfriended',
-        showConfirmButton: false,
-        timer: 1000
-      })
-    }
   }
 
 
 
   return (
-    <FriendContext.Provider value={{acceptFriendReq, getFriends, getFriendDetails, Unfriend, friends, friendDetails}}>
+    <FriendContext.Provider value={{ acceptFriendReq, 
+                                     getFriends, 
+                                     Unfriend, 
+                                     decryptFriendName, 
+                                      }}>
       {props.children}
     </FriendContext.Provider>
   )

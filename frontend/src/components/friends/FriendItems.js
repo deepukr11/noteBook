@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import userContext from '../../context/users/userContext';
 import friendContext from '../../context/friends/friendContext'
 import { useHistory } from "react-router-dom";
 import { decrypt } from 'n-krypta';
 import profile from '../../image/profile.jpg';
+import Swal from 'sweetalert2';
 
 const FriendItems = (props) => {
 
@@ -11,51 +11,62 @@ const FriendItems = (props) => {
 
     let history = useHistory();
 
-    const contextValue = useContext(userContext);
     const friendContextValu = useContext(friendContext);
 
-    const { findUserName, userName } = contextValue;
-    const { getFriendDetails } = friendContextValu;
 
-    let userEmail = "";
+    const { Unfriend } = friendContextValu;
+    
 
-    if(localStorage.getItem('Id') === friend.user1){
-        if(friend.user2 && friend.user2e){
-        userEmail = decrypt(friend.user2e, friend.user2);
-        findUserName(friend.user2, userEmail);
+    let name = "";
+    if (localStorage.getItem('Id') === friend.user1) {
+        if (friend.name2 && friend.user2) {
+            name = decrypt(friend.name2, friend.user2);
         }
     }
-    else{        
-        if(friend.user1 && friend.user1e){
-            userEmail = decrypt(friend.user1e, friend.user1);
-            findUserName(friend.user1, userEmail);
+    else {
+        if (friend.name1 && friend.user1) {
+            name = decrypt(friend.name1, friend.user1);
         }
     }
 
-    const handleViewFriend = async()=>{
-        await getFriendDetails(friend._id);
-        
-        history.push("/friendDetails");
+
+    const handleUnfriend = ()=>{
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to Unfriend!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Unfriend it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Unfriend(friend._id);
+                history.push("/friends");
+            }
+        })
+
     }
 
-   
 
-  return (
-    <div className='col-md-4'>
-        <div className="request-color">Friend</div>
+
+    return (
+        <div className='col-md-4'>
+            <div className="request-color">Friend</div>
             <div className="card ">
                 <div className="ms-2">
                     <img src={profile} width="100" height="140" alt="Profile" />
-                    <strong><strong></strong>{userName}</strong>
+                    <strong><strong></strong>{name}</strong>
                 </div>
                 <div className="date ms-1">{new Date(friend.date).toGMTString()}
                 </div>
             </div>
             <div className="modal-footer mt-1">
-                <button title="Friend detailes" onClick={handleViewFriend} className="btn btn-dark ms-auto rounded-circle"><strong>View Profile</strong></button>
+                <button onClick={handleUnfriend} className="btn btn-outline-danger rounded-circle mt-1" title='Unfriend' type="submit"><strong>Unfriend</strong></button>
+                <button title="Friend detailes" className="btn btn-dark ms-auto fa-beat rounded-circle"><strong>Message</strong></button>
             </div>
         </div>
-  )
+    )
 }
 
 export default FriendItems

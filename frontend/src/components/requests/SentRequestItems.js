@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { decrypt } from 'n-krypta';
-import userContext from '../../context/users/userContext';
 import requestContext from '../../context/requests/requestContext';
 import profile from '../../image/profile.jpg';
 import Swal from 'sweetalert2';
@@ -10,18 +9,14 @@ const SentRequestItems = (props) => {
 
     const user = props.request;
 
-    const contextValue = useContext(userContext);
+    
     const requestContentValue = useContext(requestContext);
-
-    const { findUserName, userName } = contextValue;
 
     const { cancelRequest } = requestContentValue;
 
-
-    let userEmail = user.user2e;
-    if (user.user2e) {
-        userEmail = decrypt(user.user2e, user.user2);
-        findUserName(user.user2, userEmail);
+    let name = "";
+    if (user.name2) {
+        name = decrypt(user.name2, user.user2);
     }
 
     const handleCancelRequest = () => {
@@ -55,7 +50,7 @@ const SentRequestItems = (props) => {
                 <div className="ms-2">
                     <img src={profile} width="100" height="140" alt="Profile" />
                     {user.user2e ?  // when searched by email
-                        <strong><strong></strong>{userName}</strong>
+                        <strong><strong></strong>{name}</strong>
                         :
                         <strong><strong>User ID: </strong>{user.user2}</strong>
                     }

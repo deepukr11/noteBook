@@ -32,10 +32,12 @@ const ViewUser = () => {
     const handleSendRequest = async (e) => {
         e.preventDefault();
         let friendEmail = "";
+        let findName = "";
         if (findUser.email) {
             friendEmail = encrypt(findUser.email, findUser.id);  // encrypt friendEmail
+            findName = encrypt(findUser.name, findUser.id);
         }
-        sendRequest(findUser.id, friendEmail);  // sent Request to friend
+        sendRequest(findUser.id, friendEmail, findName);  // sent Request to friend
         setRelation("Requested");
     }
 

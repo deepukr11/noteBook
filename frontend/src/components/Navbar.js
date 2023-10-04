@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 
+
 const Navbar = (props) => {
   //   
 
@@ -65,7 +66,8 @@ const Navbar = (props) => {
 
 
   return (
-    <div>
+    <>
+   
       <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-black ">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/"><strong>NoteBook</strong></Link>
@@ -87,6 +89,10 @@ const Navbar = (props) => {
               <div >
 
                 <ul className="navbar-nav Buttoncolor mb-lg-0">
+
+                <li className="nav-item">
+                    <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/chats">Chats</Link>
+                  </li>
 
                   <li className="nav-item">
                     <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/friends">Friends</Link>
@@ -130,7 +136,7 @@ const Navbar = (props) => {
         </div>
       </nav>
 
-    </div>
+    </>
 
   )
 }

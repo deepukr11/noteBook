@@ -4,13 +4,13 @@ i{
   cursor: pointer;
 }
 
-.bg-img{
-  background-image: url('./image/bgimg.png');
-  min-height: 100%;
+.App{
+  display: flex;
+  background-image: url('./image/loginimg.png');
+  min-height: 100vh;
   min-width: 100%;
   background-size: cover;
   background-position: center;
- 
 }
 
 .text{
@@ -23,13 +23,6 @@ i{
   color: black;
 }
 
-.login-bg-img{
-  background-image: url('./image/loginimg.png');
-  min-height: 100%;
-  min-width: 100%;
-  background-size: cover;
-  background-position: center;
-}
 
 .profile-img{
   image-rendering: url('./image/profile.jpg');

@@ -58,11 +58,8 @@ const Home = () => {
                             Through its powerful search functionality, users effortlessly locate desired content within notebooks, ensuring efficiency and productivity. Furthermore, the website's web clipping and bookmarking capabilities
                             facilitate research by enabling users to save valuable content from the internet directly into their notes. <br />
                             The platform thrives on seamless synchronization across devices, ensuring accessibility on desktops, laptops, tablets, and smartphones. Users can collaborate effortlessly, share notes, and provide insightful
-                            comments, fostering seamless teamwork and group projects. <br />
-                            With robust data backup and security measures, users can rest assured that their valuable notes are safe from accidental loss or unauthorized access. Customization options allow users to tailor the notebook interface,
-                            and reminder and notification features guarantee that no crucial tasks are overlooked. <br />
-                            The Notebook Website empowers a digital transformation in the note-taking landscape, streamlining organization, accessibility, and collaboration, and serving as an indispensable tool for users seeking to harness
-                            the full potential of their notes in today's fast-paced world.
+                            comments, fostering seamless teamwork and group projects.
+                           
                         </p></div>
                     </div>
                 </div>
