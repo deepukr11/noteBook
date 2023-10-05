@@ -87,7 +87,7 @@ const UnfriendItem = styled(Box)`
 const ProfileDrawer = (props) => {
 
     const { viewProfile, setViewProfile, profileDetails, profilePhoto} = props;
-    const { name, email, userId, date, relation } = profileDetails;
+    const { name, email, userID, date, relation } = profileDetails;
 
     // for friend 
     const friendContextValu = useContext(friendContext);
@@ -96,7 +96,7 @@ const ProfileDrawer = (props) => {
     const [friend, setFriend] = useState(true);
 
     const handleUnfriend = () => {
-        Unfriend(userId);
+        Unfriend(userID);
     }
 
     const anchor = 'left';
@@ -116,7 +116,7 @@ const ProfileDrawer = (props) => {
                                 "My "
                                 }
                         Profile
-                        
+    
                     </strong>
                 </Text>
             </Header>
@@ -125,7 +125,7 @@ const ProfileDrawer = (props) => {
                     <ImageContainer>
                         <Image src={profilePhoto} alt="Profile" />
                     </ImageContainer>
-                    <div className='ms-5 mb-3 Buttoncolor'>User Id: <strong>{userId}</strong></div>
+                    <div className='ms-5 mb-3 Buttoncolor'>User Id: <strong>{userID}</strong></div>
                     <BoxWrapper>
                         <Time><strong>
                             {relation === "friend" ?

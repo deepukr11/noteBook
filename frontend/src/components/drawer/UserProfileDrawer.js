@@ -79,13 +79,7 @@ const UserProfileDrawer = (props) => {
     let grpCreater = "";
     if(chatProfile.isGroup){
         groupAdminIDSize = chatDetails.groupAdminID.length;
-        const participantSize = chatDetails.usersID.length;
-    
-        for(let i=0; i<participantSize; i++){
-            if(chatDetails.groupCreaterID === chatDetails.usersID[i]){
-                grpCreater = decrypt(chatDetails.usersName[i], chatDetails.usersID[i]);
-            }
-        }
+        grpCreater = decrypt(chatDetails.usersName[0], chatDetails.usersID[0]);
     }
 
     const anchor = 'right';

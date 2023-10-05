@@ -1,4 +1,4 @@
-// import { useState } from "react";
+
 import ChatContext from "./chatContext";
 
 
@@ -37,6 +37,7 @@ const ChatState = (props) => {
     return json.chatID;
   }
 
+
   // create new group chat 
   const createGroupChat = async (usersID, usersName, groupName) => { 
     const url = `${Host}/api/chats/createGroupChat`
@@ -49,7 +50,7 @@ const ChatState = (props) => {
       body: JSON.stringify({usersID, usersName, groupName}),
     }); 
     const json = await response.json();
-    return json.chatID;
+    return json.groupChat;
   }
 
 

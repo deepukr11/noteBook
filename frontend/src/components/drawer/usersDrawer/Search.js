@@ -44,7 +44,7 @@ const Search = ({setSearch}) => {
                     <SearchIcon fontSize="small" />
                 </Icon>
                 <InputField
-                    placeholder="Search or start new chat"
+                    placeholder="Search"
                     inputProps={{ 'aria-label': 'search' }}
                     onChange={(e) => setSearch(e.target.value)}
                 />

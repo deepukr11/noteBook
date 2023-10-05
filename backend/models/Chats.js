@@ -26,10 +26,6 @@ const ChatsSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    groupCreaterID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    }
 
 },
     {

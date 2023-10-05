@@ -54,15 +54,12 @@ router.get('/fetchChats', fetchuser, async (req, res) => {
 
 router.post('/createGroupChat', fetchuser, async (req, res) => {
      let success = false;
-     try {
-          const usersID = JSON.parse(req.body.usersID);
-          const usersName = JSON.parse(req.body.usersName);
+     try { 
           const groupChat = await Chats.create({
                groupName: req.body.groupName,
-               usersID: usersID,
-               usersName: usersName,
+               usersID: req.body.usersID,
+               usersName: req.body.usersName,
                isGroupChat: true,
-               groupCreaterID: req.user.id,
                groupAdminID: [req.user.id]
           });
           success = true;

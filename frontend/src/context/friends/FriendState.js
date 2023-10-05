@@ -1,4 +1,3 @@
-import { useState } from "react";
 import FriendContext from "./friendContext";
 import { decrypt } from 'n-krypta';
 
@@ -7,13 +6,9 @@ const FriendState = (props) => {
   // const Host = "https://notebookserver.onrender.com";
   const Host = "http://localhost:5000"
 
-  const [users, setUsers] = useState([]);
-
   const myID = localStorage.getItem('Id');
 
-  // const [friendData, setFriendData] = useState([]);
-
-
+ 
   // Accept Friend Request
 
   const acceptFriendReq = async (reqId) => {
@@ -43,48 +38,40 @@ const FriendState = (props) => {
       },
     });
     const json = await response.json();
-    return json;
-  }
+    const friendsData = [];
+    // eslint-disable-next-line
+    json.map((friend) => {
+      let profileDetails = {friendshipID: friend._id, 
+                            userID: "", 
+                            name: "", 
+                            email: "", 
+                            date: friend.date, 
+                            relation: "friend"};
 
-  const decryptFriendName = () => {
-      const friendsData = [];
-      const fetchData = async () => {
-        let data = await getFriends();
-        setUsers(data);
+      if (myID === friend.user1) {
+        if (friend.name2 && friend.user2) {
+          profileDetails.userID = friend.user2;
+          profileDetails.name = decrypt(friend.name2, friend.user2); // decrypt friend name
+          if (friend.user2e) {
+            profileDetails.email = decrypt(friend.user2e, friend.user2);  // decrypt friend email
+          }
+          friendsData.push(profileDetails);
+        }
       }
-      fetchData();
-      // eslint-disable-next-line
-      users.map((friend) => {
-        let profileDetails = {friendshipID: friend._id, 
-                              UserID: "", 
-                              name: "", 
-                              email: "", 
-                              date: friend.date, 
-                              relation: "friend"};
-
-        if (myID === friend.user1) {
-          if (friend.name2 && friend.user2) {
-            profileDetails.id = friend.user2;
-            profileDetails.name = decrypt(friend.name2, friend.user2); // decrypt friend name
-            if (friend.user2e) {
-              profileDetails.email = decrypt(friend.user2e, friend.user2);  // decrypt friend email
-            }
-            friendsData.push(profileDetails);
+      else {
+        if (friend.name1 && friend.user1) {
+          profileDetails.userID = friend.user1;
+          profileDetails.name = decrypt(friend.name1, friend.user1);
+          if (friend.user1e) {
+            profileDetails.email = decrypt(friend.user1e, friend.user1);  // decrypt friend email
           }
+          friendsData.push(profileDetails);
         }
-        else {
-          if (friend.name1 && friend.user1) {
-            profileDetails.id = friend.user1;
-            profileDetails.name = decrypt(friend.name1, friend.user1);
-            if (friend.user1e) {
-              profileDetails.email = decrypt(friend.user1e, friend.user1);  // decrypt friend email
-            }
-            friendsData.push(profileDetails);
-          }
-        }
-      })
-      return friendsData;
+      }
+    })
+    return friendsData;
   }
+
 
   // Unfriend
   const Unfriend = async (friendId) => {
@@ -107,8 +94,7 @@ const FriendState = (props) => {
   return (
     <FriendContext.Provider value={{ acceptFriendReq, 
                                      getFriends, 
-                                     Unfriend, 
-                                     decryptFriendName, 
+                                     Unfriend                                     
                                       }}>
       {props.children}
     </FriendContext.Provider>

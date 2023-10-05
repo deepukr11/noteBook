@@ -61,7 +61,9 @@ const ChatItems = ({ user}) => {
     let newmessage="hello";
     const Id = localStorage.getItem('Id');
     if (user.isGroupChat) {
-        name = user.groupName;
+        if (Id === user.usersID[0]) {
+            name = decrypt(user.groupName, user.usersID[0]);
+        }
     }
     else {
         if (Id === user.usersID[0]) {

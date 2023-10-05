@@ -3,6 +3,8 @@ import { styled, Box, Typography } from "@mui/material";
 import ProfileDrawer from '../ProfileDrawer';
 import chatContext from '../../../context/chats/chatContext';
 import msgContext from '../../../context/messages/msgContext';
+import ClearIcon from '@mui/icons-material/Clear';
+
 
 
 const Component = styled(Box)`
@@ -26,9 +28,26 @@ const Container = styled(Box)`
     display: flex;
 `;
 
+const SelectedText = styled(Box)`
+    margin-right: 5px;
+`;
 
-const UsersItems = ({ profile, user, setOpenUserDrawer, isGroup }) => {
+const Clrear = styled(Box)`
+    margin-left: 40px;
+    cursor: pointer;
+`;
 
+const UsersItems = (props) => {
+    const { profile,
+        user,
+        setOpenUserDrawer,
+        isGroup,
+        addUserInGrp,
+        removeUserfromgrp
+    } = props;
+
+
+    const [selected, setSelected] = useState(false); 
     const [viewProfile, setViewProfile] = useState(false);
 
     const handleViewUser = () => {
@@ -56,6 +75,15 @@ const UsersItems = ({ profile, user, setOpenUserDrawer, isGroup }) => {
             });
             setOpenUserDrawer(false);
         }
+        else {
+            addUserInGrp(user.userID, user.name);
+            setSelected(true);
+        }
+    }
+
+    const removeUser = () =>{
+        removeUserfromgrp(user.userID, user.name);
+        setSelected(false);
     }
 
     return (
@@ -70,13 +98,24 @@ const UsersItems = ({ profile, user, setOpenUserDrawer, isGroup }) => {
                             <strong>{user.name}</strong>
                         </Typography>
                     </Container>
-                     {user.email}
+                    {user.email}
                 </Box>
+                <SelectedText>
+                    {selected ?
+                    <>
+                    <Clrear>
+                    <ClearIcon onClick={removeUser}/>
+                    </Clrear>
+                    Selected
+                    </> 
+                    :
+                     ""}
+                </SelectedText>
                 <ProfileDrawer viewProfile={viewProfile}
                     setViewProfile={setViewProfile}
                     profileDetails={user}
                     profilePhoto={profile}
-                      />
+                />
             </Component>
 
         </div>

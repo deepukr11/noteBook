@@ -12,7 +12,7 @@ const UserState = (props) => {
   const Host = "http://localhost:5000"
 
 
-  const [myProfileDetails, setMyProfileDetails] = useState({userId: "", 
+  const [myProfileDetails, setMyProfileDetails] = useState({userID: "", 
                                                              name: "", 
                                                              email: "",  
                                                              date: "", 
@@ -39,13 +39,12 @@ const UserState = (props) => {
     });
 
     const json = await response.json();
-    const key = decrypt(localStorage.getItem('key'), Host);
+    const decrypted_email = decrypt(localStorage.getItem('key'), Host); 
     // decrypting User data
-    const decrypted_name = decrypt(json.name, key);
-    const decrypted_email = decrypt(localStorage.getItem('key'), Host);
+    const decrypted_name = decrypt(json.name, decrypted_email);
     localStorage.setItem('Id', json._id);
     setMyProfileDetails({ 
-                          userId: json._id,
+                          userID: json._id,
                           name: decrypted_name, 
                           email: decrypted_email, 
                           date: json.date,
