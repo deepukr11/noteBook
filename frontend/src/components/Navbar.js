@@ -94,9 +94,9 @@ const Navbar = (props) => {
                     <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/chats">Chats</Link>
                   </li>
 
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/friends">Friends</Link>
-                  </li>
+                  </li> */}
 
                   <li className="nav-item">
                     <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/receivedRequests">confirm</Link>

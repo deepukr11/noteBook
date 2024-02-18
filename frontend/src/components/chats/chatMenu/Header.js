@@ -5,6 +5,12 @@ import profile from '../../../image/profile.jpg'
 import ProfileDrawer from '../../drawer/ProfileDrawer';
 import UsersDrawer from '../../drawer/usersDrawer/UsersDrawer';
 import userContext from '../../../context/users/userContext';
+import io from 'socket.io-client'
+
+
+const  ENDPOINT = "http://localhost:5000";
+var socket, selectedChatCompare;
+
 
 const Component = styled(Box)`
     height: 55px;
@@ -43,6 +49,8 @@ const Header = () => {
 
     const [viewProfile, setViewProfile] = useState(false);
     const [openUserDrawer, setOpenUserDrawer] = useState(false);
+    const [socketConnected, setSocketConnected] = useState(false)
+
 
     useEffect(() => {        
           getUser();     // get my profile detaile    
@@ -56,6 +64,14 @@ const Header = () => {
     const toggleUserDrawer = () => {
         setOpenUserDrawer(true);
     }
+
+    
+    useEffect(() =>{
+        socket= io(ENDPOINT);
+        socket.emit("setup", myProfileDetails);
+        socket.on("connected", ()=> setSocketConnected(true))
+    }, [])
+   
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext} from 'react';
 import { styled, Box, Typography, Divider } from "@mui/material";
 import profile from '../../../image/profile.jpg';
 import { decrypt } from 'n-krypta';
@@ -52,16 +52,19 @@ margin-left: auto;
 `;
 
 
+
+
 const ChatItems = ({ user}) => {
 
     const messageValue = useContext(msgContext);
     const { setChatProfile, setChatDetails} = messageValue;
 
+
     let name = "";
-    let newmessage="hello";
+    // let newmessage="hello";
     const Id = localStorage.getItem('Id');
     if (user.isGroupChat) {
-        if (Id === user.usersID[0]) {
+        if (user.groupName && user.usersID[0]) {
             name = decrypt(user.groupName, user.usersID[0]);
         }
     }
@@ -83,7 +86,7 @@ const ChatItems = ({ user}) => {
             setChatDetails("");
         } 
     }
-   
+
 
 
     return (
@@ -97,7 +100,7 @@ const ChatItems = ({ user}) => {
                         
                         <Typography><strong>{name}</strong></Typography>
 
-                        <Date>monday</Date>
+                        <Date></Date>
                         {/* { 
                         // message?.text && 
                         <Timestamp>{formatDate(message?.timestamp)}</Timestamp>        
@@ -105,7 +108,7 @@ const ChatItems = ({ user}) => {
                     </Container>
                     <Box>
                         <Text>
-                            {newmessage}
+                            {/* {newmessage} */}
                             {/* {message?.text?.includes('localhost') ? 'media' : message.text} */}
                         </Text>
                     </Box>
