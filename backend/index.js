@@ -28,11 +28,11 @@ app.use('/api/messages',require('./routes/messages'))
 
 
 app.get('/' ,(req , res) => {
-  res.send("hii i am ")
+  res.send("this is chat app")
  })
 
  app.get('/home' ,(req , res) => {
-  res.send("I am home ")
+  res.send("I am home")
  })
 
  const server= app.listen(port,()=>{
